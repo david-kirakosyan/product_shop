@@ -7,10 +7,7 @@ import am.itspace.product_shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +22,14 @@ public class OrderController {
     public String addOrder(@ModelAttribute Order order,
                            @AuthenticationPrincipal CurrentUser currentUser,
                            @RequestParam("id") List<Integer> id) {
+        System.err.println(id);
         orderService.saveOrder(order, currentUser, id);
-        return "redirect:/orders";
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete")
+    public String deleteOrder(@RequestParam("id") int id) {
+        orderService.deleteOrderById(id);
+        return "redirect:/orders/add";
     }
 }

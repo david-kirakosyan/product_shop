@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void saveOrder(Order order, CurrentUser currentUser, List<Integer> product) {
-        order.setDatetime(new Date());
+        order.setDatetime(LocalDateTime.now());
         order.setUser(currentUser.getUser());
 
         if (product != null && !product.isEmpty()){
@@ -44,7 +45,11 @@ public class OrderServiceImpl implements OrderService {
         }
         orderRepository.save(order);
         int id = currentUser.getUser().getId();
-        cartRepository.deleteByUser_id(id);
+        cartRepository.deleteById(id);
     }
 
+    @Override
+    public void deleteOrderById(int id){
+        orderRepository.deleteById(id);
+    }
 }

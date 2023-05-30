@@ -36,10 +36,8 @@
                     <!-- Product actions-->
                     <form action="/orders/add" method="post">
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><input class="btn btn-outline-dark mt-auto" type="hidden"
-                                                            th:each="product : ${user.products}" name="productId"
-                                                            th:value="${product.id}"/>
-
+                            <div class="text-center" th:each="product : ${user.products}">
+                                <input class="btn btn-outline-dark mt-auto" type="hidden" name="id" th:value="${product.id}"/>
                                 <button type="submit">Delete</button>
                             </div>
                         </div>

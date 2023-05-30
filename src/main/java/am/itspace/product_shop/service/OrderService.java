@@ -9,4 +9,5 @@ public interface OrderService {
 
     void saveOrder(Order order, CurrentUser currentUser, List<Integer> productIds);
 
+    void deleteOrderById(int id);
 }

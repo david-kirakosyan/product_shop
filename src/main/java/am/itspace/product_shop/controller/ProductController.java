@@ -32,7 +32,7 @@ public class ProductController {
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product, @RequestParam("image") MultipartFile multipartFile) throws IOException {
         productService.saveProduct(product, multipartFile);
-        return "redirect:/products";
+        return "redirect:/";
     }
 
     @GetMapping("/delete")
