@@ -9,7 +9,6 @@ import am.itspace.product_shop.security.CurrentUser;
 import am.itspace.product_shop.service.OrderService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,20 +31,18 @@ public class OrderServiceImpl implements OrderService {
         order.setDatetime(new Date());
         order.setUser(currentUser.getUser());
 
-        List<Product> products = new ArrayList<>();
-        for (Integer productId : product) {
-            Optional<Product> byId = productRepository.findById(productId);
-            if (byId.isPresent()) {
-                Product product1 = byId.get();
-                if (!products.contains(product1)) {
-                    products.add(product1);
+        if (product != null && !product.isEmpty()){
+            List<Product> products = new ArrayList<>();
+            for (Integer productId : product) {
+                Optional<Product> byId = productRepository.findById(productId);
+                if (byId.isPresent()) {
+                    products.add(byId.get());
                 }
             }
+            order.setProducts(products);
+
         }
-
-        order.setProducts(products);
         orderRepository.save(order);
-
         int id = currentUser.getUser().getId();
         cartRepository.deleteByUser_id(id);
     }

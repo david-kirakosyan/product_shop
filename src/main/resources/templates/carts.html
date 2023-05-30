@@ -16,12 +16,12 @@
 <body>
 <!-- Section-->
 <div th:include="fragment/header::headerFragment"></div>
-<section class="py-5" th:each="user : ${users}">
+<section class="py-5" >
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-            <div class="col mb-5" th:each="product : ${user.products}">
-                <div class="card h-100" >
+            <div class="col mb-5" th:each="user : ${users}">
+                <div class="card h-100" th:each="product : ${user.products}">
                     <!-- Product image-->
                     <img class="card-img-top" th:src="@{/getImage(profilePic=${product.imgPath})}" alt="..."/>
                     <!-- Product details-->
@@ -34,8 +34,8 @@
                         </div>
                     </div>
                     <!-- Product actions-->
-                    <form action="/order/add" method="post">
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" >
+                    <form action="/orders/add" method="post">
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center"><input class="btn btn-outline-dark mt-auto" type="hidden"
                                                             th:each="product : ${user.products}" name="productId"
                                                             th:value="${product.id}"/>
